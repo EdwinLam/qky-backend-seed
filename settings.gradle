@@ -1,0 +1,6 @@
+rootProject.name = 'qky-classgroup'
+include 'qky-classgroup-entity'
+include 'qky-classgroup-service'
+include 'qky-classgroup-web'
+include 'qky-classgroup-util'
+

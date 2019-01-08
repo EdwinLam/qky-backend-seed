@@ -1,0 +1,6 @@
+archivesBaseName = 'qky-classgroup-entity'
+
+dependencies {
+    // MybatisPlus
+    compile('com.baomidou:mybatis-plus-boot-starter:2.2.0')
+}

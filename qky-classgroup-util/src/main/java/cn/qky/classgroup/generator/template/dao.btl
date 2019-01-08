@@ -1,0 +1,11 @@
+package ${entity.daoPackage};
+
+import cn.qky.classgroup.entity.${entity.className};
+
+/**
+ * @Author ${entity.author}
+ * @Description: ${entity.description}数据处理层
+ */
+public interface ${entity.className}Dao extends BaseDao<${entity.className},${entity.primaryKeyType}> {
+
+}

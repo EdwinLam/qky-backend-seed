@@ -1,0 +1,11 @@
+package ${entity.servicePackage};
+
+import cn.qky.classgroup.entity.${entity.className};
+
+/**
+ * @Author ${entity.author}
+ * @Description: ${entity.description}接口
+ */
+public interface ${entity.className}Service extends BaseService<${entity.className},${entity.primaryKeyType}> {
+
+}
