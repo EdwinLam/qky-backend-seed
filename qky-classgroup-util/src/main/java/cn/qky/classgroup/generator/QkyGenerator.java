@@ -110,7 +110,7 @@ public class QkyGenerator {
         entity.setControllerPackage(controllerPackage);
         entity.setAuthor(author);
         entity.setClassName(className);
-        entity.setTableName("t_" + camel2Underline(className));
+        entity.setTableName(camel2Underline(className));
         entity.setClassNameLowerCase(first2LowerCase(className));
         entity.setDescription(description);
         entity.setPrimaryKeyType(primaryKeyType);

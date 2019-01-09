@@ -27,12 +27,11 @@ spring:
   jpa:
     show-sql: true
     # 自动生成表结构
-    generate-ddl: true
-    properties:
-      hibernate:
-        naming:
-          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-        hbm2ddl: update
+    generate-ddl: false
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: none
   # Redis
   redis:
     host: 127.0.0.1
@@ -58,6 +57,7 @@ qky:
 ignored:
   urls:
     - /test/**
+    - /basUser/**
     - /xboot/permission/getMenuList/**
     - /xboot/user/regist
     - /xboot/common/**
