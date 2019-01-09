@@ -7,4 +7,7 @@ dependencies {
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
     // spring boot
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile 'org.flywaydb:flyway-core:5.2.4'
+    compile 'org.flywaydb:flyway-maven-plugin:5.2.4'
+
 }

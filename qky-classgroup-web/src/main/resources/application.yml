@@ -12,6 +12,9 @@ swagger:
     url: no
     email:
 
+flyway:
+
+
 spring:
   # 数据源
   datasource:
@@ -46,6 +49,8 @@ spring:
   # 日志记录方式 true使用Elasticsearch记录 false记录至数据库中
   logRecord:
     es: false
+  flyway:
+    baseline-on-migrate: true
 
 qky:
   # token过期时间（分钟）
