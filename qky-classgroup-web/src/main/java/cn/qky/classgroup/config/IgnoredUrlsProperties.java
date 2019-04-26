@@ -1,12 +1,16 @@
 package cn.qky.classgroup.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
+/**
+ * @Author: Edwin
+ * @Description: 不拦截网址配置
+ */
+@Component
 @ConfigurationProperties(prefix = "ignored")
 public class IgnoredUrlsProperties {
 

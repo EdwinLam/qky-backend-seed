@@ -1,26 +1,26 @@
 server:
   port: 8084
 
+
 # Swagger界面内容配置
 swagger:
-  title: Ripple API接口文档
-  description: Qky Api Documentation
-  version: 1.0.0
+  title: 班级小助理API接口文档
+  description: 班级小助理API接口文档
+  version: 0.0.1
   termsOfServiceUrl:
   contact:
-    name: qky
-    url: no
-    email:
-
-flyway:
-
+    name: Edwin
+    url: http://wiki.qtonecloud.cn/pages/viewpage.action?pageId=51875966
+    email: edwin13@qq.com
 
 spring:
+  thymeleaf:
+    cache: false
   # 数据源
   datasource:
-    #    url: ENC(jdbc_url)
-    #    username: ENC(jdbc_user)
-    #    password: ENC(jdbc_password)
+#    url: ENC(jdbc_url)
+#    username: ENC(jdbc_user)
+#    password: ENC(jdbc_password)
     url: jdbc:mysql://127.0.0.1:3306/ripple?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: root
@@ -33,6 +33,7 @@ spring:
     generate-ddl: false
     hibernate:
       naming:
+        # 驼峰命名
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       ddl-auto: none
   # Redis
@@ -51,6 +52,11 @@ spring:
     es: false
   flyway:
     baseline-on-migrate: true
+weixin:
+  appid: wx37532ad9bfef678d
+  secret: 752b0e9a73854e2735b6b57a8de68d3b
+  apiUrl: https://api.weixin.qq.com/sns/jscode2session
+  grant_type: authorization_code
 
 qky:
   # token过期时间（分钟）
@@ -61,11 +67,8 @@ qky:
 # 忽略鉴权url
 ignored:
   urls:
-    - /test/**
-    - /basUser/**
-    - /xboot/permission/getMenuList/**
-    - /xboot/user/regist
-    - /xboot/common/**
+    - /v2/swagger.json
+    - /system/ssoLogin
     - /swagger-ui.html
     - /swagger-resources/**
     - /swagger/**

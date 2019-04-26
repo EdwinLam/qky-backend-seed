@@ -1,42 +1,26 @@
 package cn.qky.classgroup.config.security;
 
 import cn.qky.classgroup.config.IgnoredUrlsProperties;
-import cn.qky.classgroup.config.security.jwt.AuthenticationFailHandler;
-import cn.qky.classgroup.config.security.jwt.AuthenticationSuccessHandler;
-import cn.qky.classgroup.config.security.jwt.JWTAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.web.cors.CorsUtils;
 
+/**
+ * @Author: Edwin
+ * @Description:
+ */
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private IgnoredUrlsProperties ignoredUrlsProperties;
-
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
-
-    @Autowired
-    private AuthenticationSuccessHandler successHandler;
-
-    @Autowired
-    private AuthenticationFailHandler failHandler;
-
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -49,21 +33,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         }
 
         registry.and()
-                //表单登录方式
-                .formLogin()
-                //登录需要经过的url请求
-                .loginProcessingUrl("/login")
-                .permitAll()
-                //成功处理类
-                .successHandler(successHandler)
-                //失败
-                .failureHandler(failHandler)
-                .and()
-                .logout()
-                .permitAll().and().exceptionHandling().authenticationEntryPoint(macLoginUrlAuthenticationEntryPoint())
+                .exceptionHandling().authenticationEntryPoint(macLoginUrlAuthenticationEntryPoint())
                 .and()
                 .authorizeRequests()
-                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()//就是这一行
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 //任何请求
                 .anyRequest()
                 //需要身份认证
@@ -76,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //前后端分离采用JWT 不需要session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                //添加JWT过滤器 除/login其它请求都需经过此过滤器
+                //添加JWT过滤器
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()));
     }
 

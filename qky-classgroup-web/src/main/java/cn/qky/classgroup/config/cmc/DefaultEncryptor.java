@@ -7,7 +7,6 @@ import java.util.Map;
 
 /**
  * @Auther: Edwin
- * @Date: 2018/12/5 16:55
  * @Description:
  */
 public class DefaultEncryptor implements StringEncryptor {

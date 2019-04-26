@@ -30,13 +30,14 @@ public class TestController{
     @RequestMapping(value = "/msg",method = RequestMethod.GET)
     @ApiOperation(value = "测试短信发送接口")
     public void msg(){
+        System.out.println("哈哈哈");
         // 增加发送的号码
-        List<String> phones = new ArrayList();
-        phones.add("13824789780");
-        Map<String,Object> paramMap = new HashMap<>();
-        paramMap.put("schoolCode","classGroup");
-        paramMap.put("schoolName","班群小助理");
-        msgSender.sendSms("测试内容",phones, "QKY_CLASSGROUP","dev:"+"QKY_CLASSGROUP",paramMap);
+//        List<String> phones = new ArrayList();
+//        phones.add("13824789780");
+//        Map<String,Object> paramMap = new HashMap<>();
+//        paramMap.put("schoolCode","classGroup");
+//        paramMap.put("schoolName","班群小助理");
+//        msgSender.sendSms("测试内容",phones, "QKY_CLASSGROUP","dev:"+"QKY_CLASSGROUP",paramMap);
     }
 
 }

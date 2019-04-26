@@ -1,5 +1,5 @@
-// 所有子项目的通用配置
 apply from: 'dependencies.gradle'
+
 buildscript {
     ext {
         springBootVersion = '2.0.3.RELEASE'
@@ -17,30 +17,34 @@ buildscript {
     }
 }
 
+
+
+// 所有子项目的通用配置
 subprojects {
-    apply plugin: 'war'
     apply plugin: 'java'
-    apply plugin: 'idea'
-    apply plugin: 'maven'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'io.spring.dependency-management'//应用依赖管理插件
-    apply plugin: 'war'// war可以将开发的应用打包成部署包
-
-    version = '1.0.0'
-
+    group 'cn.qky.classgroup'
+    version 'demo-0.0.1-SNAPSHOT'
     // JVM 版本号要求
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
-    // java编译的时候缺省状态下会因为中文字符而失败
-    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    [compileJava,compileTestJava,javadoc]*.options*.encoding = 'UTF-8'
+
     configurations {
+        developmentOnly
+        runtimeClasspath {
+            extendsFrom developmentOnly
+        }
         provided
         compile.extendsFrom provided
         all*.exclude group: 'org.springframework', module: 'spring'
         all*.exclude group: 'asm', module: 'asm'
         all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
+
     repositories {
         repositories { maven { url 'http://repo.qtonecloud.cn/content/groups/public/' } }
         repositories { maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' } }
@@ -48,39 +52,12 @@ subprojects {
     }
 
     dependencies {
+        developmentOnly("org.springframework.boot:spring-boot-devtools")
         compile('cn.hutool:hutool-all:4.0.5')
-        // JPA
-        compile('org.springframework.boot:spring-boot-starter-data-jpa')
         // Lombok
-        compile('org.projectlombok:lombok:1.18.0')
-        // Swagger API文档
-        compile('io.springfox:springfox-swagger-ui:2.7.0')
-        compile('io.springfox:springfox-swagger2:2.7.0')
+        compile 'org.projectlombok:lombok:1.18.4'
         // 加载lib目录下所有的jar
         compile fileTree(dir: '../lib', include: ['*.jar'])
-    }
-
-    jar {
-        manifest {
-            attributes 'Implementation-Title': 'Gradle Quickstart',
-                    'Implementation-Version': version,
-                    'Main-Class': 'cn.thinkjoy.QkyWebApplication'
-        }
-    }
-
-    // 显示当前项目下所有用于 compile 的 jar.
-    task listJars(description: 'Display all compile jars.') << {
-        configurations.compile.each { File file -> println file.name }
-    }
-
-    gradle.projectsEvaluated {
-        tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
-        }
-    }
-
-    bootRun {
-        sourceResources sourceSets.main
     }
 }
 

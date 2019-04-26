@@ -1,16 +1,21 @@
 package cn.qky.classgroup.service;
 
 import cn.qky.classgroup.dao.BaseDao;
+import cn.qky.classgroup.entity.BaseEntity;
+import cn.qky.classgroup.utils.SpecificationUtil;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 //JDK8函数式接口注解 仅能包含一个抽象方法
 @FunctionalInterface
-public interface BaseService<E, ID extends Serializable> {
+public interface BaseService<E extends BaseEntity, ID extends Serializable> {
 
     BaseDao<E, ID> getRepository();
 
@@ -113,38 +118,51 @@ public interface BaseService<E, ID extends Serializable> {
      * @param spec
      * @return
      */
-    default List<E> findAll(Specification<E> spec) {
-        return getRepository().findAll(spec);
+    default List<E> findAll(E entity) {
+        return getRepository().findAll(new SpecificationUtil().entityToSpecification(entity));
     }
 
     /**
-     * 分页获取
+     * 根据条件查询获取
      *
-     * @param pageable
+     * @param entity
      * @return
      */
-    default Page<E> findAll(Pageable pageable) {
-        return getRepository().findAll(pageable);
+    default E findOne(E entity) {
+        return (E) getRepository().findOne(new SpecificationUtil().entityToSpecification(entity)).get();
+    }
+
+
+    /**
+     * 分页查询
+     * @param entity
+     * @param pageNum
+     * @param pageSize
+     * @param orderBy
+     * @param order
+     * @return
+     */
+    default Page<E> page(E entity, int pageNum, int pageSize, String orderBy, Sort.Direction order) {
+        Pageable pageable =  PageRequest.of(pageNum-1,pageSize,new Sort(order, orderBy));
+        return getRepository().findAll(new SpecificationUtil().entityToSpecification(entity), pageable);
     }
 
     /**
-     * 根据查询条件分页获取
-     *
-     * @param spec
-     * @param pageable
+     * @param entity
+     * @param pageNum
+     * @param pageSize
      * @return
      */
-    default Page<E> findAll(Specification<E> spec, Pageable pageable) {
-        return getRepository().findAll(spec, pageable);
+    default Page<E> page(E entity, int pageNum, int pageSize) {
+        return this.page(entity,pageNum,pageSize,"id",Sort.Direction.DESC);
     }
 
+
     /**
-     * 获取查询条件的结果数
-     *
-     * @param spec
+     * @param entity
      * @return
      */
-    default long count(Specification<E> spec) {
-        return getRepository().count(spec);
+    default long count(E entity) {
+        return getRepository().count(new SpecificationUtil().entityToSpecification(entity));
     }
 }

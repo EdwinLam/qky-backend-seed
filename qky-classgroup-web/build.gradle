@@ -1,13 +1,26 @@
 archivesBaseName = 'qky-classgroup-web'
 apply plugin: 'war'// war可以将开发的应用打包成部署包
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java','../qky-classgroup-entity/src/main/java','../qky-classgroup-service/src/main/java']
+        }
+    }
+}
 
 
 dependencies {
-    compile project(':qky-classgroup-service')
+    provided project(':qky-classgroup-service')
+    compile('com.ibeetl:beetl:2.8.3')
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
-    // spring boot
+    //    // spring boot
     compile('org.springframework.boot:spring-boot-starter-web')
-    compile 'org.flywaydb:flyway-core:5.2.4'
-    compile 'org.flywaydb:flyway-maven-plugin:5.2.4'
-
+    // 热更新
+    compile 'org.springframework.security.oauth:spring-security-oauth2:2.3.4.RELEASE'
+    // flyway
+//    compile 'org.flywaydb:flyway-core:5.2.4'
+//    compile 'org.flywaydb:flyway-maven-plugin:5.2.4'
+}
+bootRun {
+    sourceResources sourceSets.main
 }

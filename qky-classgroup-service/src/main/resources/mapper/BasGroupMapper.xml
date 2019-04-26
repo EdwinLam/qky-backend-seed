@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qky.classgroup.dao.mapper.BasGroupMapper">
+
+    <select id="statisticalGroupMemberNumber" resultType="cn.qky.classgroup.result.group.StatisticalGroupMemberNumber">
+        SELECT
+            COUNT( CASE WHEN userIdentity =1 THEN 1 ELSE NULL END ) AS ownerNumber,
+            COUNT( CASE WHEN userIdentity =2 THEN 1 ELSE NULL END ) AS adminNumber,
+            COUNT( CASE WHEN userIdentity =3 THEN 1 ELSE NULL END ) AS teacherNumber,
+            COUNT( CASE WHEN userIdentity =4 THEN 1 ELSE NULL END ) AS parentNumber,
+            COUNT(1) AS memberNumber
+        FROM
+            group_user_rel
+        where
+          groupId = #{groupId} and userStatus=1 and status=0
+    </select>
+</mapper>

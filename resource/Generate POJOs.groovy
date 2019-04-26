@@ -4,7 +4,7 @@ import com.intellij.database.util.Case
 import com.intellij.database.util.DasUtil
 
 
-packageName = "cn.qky.classgroup.entity.source;"
+packageName = "cn.qky.classgroup.entity;"
 typeMapping = [
         (~/(?i)bigint/)                      : "Long",
         (~/(?i)tinyint|smallint|mediumint|int|integer/)                      : "Integer",

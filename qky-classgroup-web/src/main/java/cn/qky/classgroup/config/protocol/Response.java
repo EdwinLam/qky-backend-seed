@@ -20,12 +20,6 @@ public class Response implements Serializable {
      */
     private Date timestamp;
 
-    public Response(Integer code, String message, Date timestamp) {
-        this.code = code;
-        this.message = message;
-        this.timestamp = timestamp;
-    }
-
     public Response(QkyException rippleException) {
         this.code = rippleException.getCode();
         this.message = rippleException.getMessage();

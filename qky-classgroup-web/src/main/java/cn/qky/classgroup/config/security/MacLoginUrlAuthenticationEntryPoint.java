@@ -1,6 +1,7 @@
 package cn.qky.classgroup.config.security;
 
 
+import cn.qky.classgroup.enums.ResponseCodeEnum;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.*;
@@ -15,37 +16,23 @@ import java.io.PrintWriter;
 import java.util.Date;
 
 /**
- * 没有登录时候拦截用
+ * @Author: Edwin
+ * @Description: AuthenticationEntryPoint 用来解决匿名用户访问无权限资源时的异常
  */
 public class MacLoginUrlAuthenticationEntryPoint implements AuthenticationEntryPoint,
         InitializingBean {
-    // ~ Static fields/initializers
-    // =====================================================================================
-
-    // ~ Instance fields
-    // ================================================================================================
-
-    private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
     private PortMapper portMapper = new PortMapperImpl();
     private PortResolver portResolver = new PortResolverImpl();
     private String loginFormUrl;
-    private boolean forceHttps = false;
     private boolean useForward = false;
 
-    /**
-     * @param loginFormUrl URL where the login page can be found. Should either be
-     *                     relative to the web-app context path (include a leading {@code /}) or an absolute
-     *                     URL.
-     */
+
     public MacLoginUrlAuthenticationEntryPoint(String loginFormUrl) {
         Assert.notNull(loginFormUrl, "loginFormUrl cannot be null");
         this.loginFormUrl = loginFormUrl;
     }
 
-    // ~ Methods
-    // ========================================================================================================
-
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         Assert.isTrue(
                 StringUtils.hasText(loginFormUrl)
                         && UrlUtils.isValidRedirectUrl(loginFormUrl),
@@ -58,20 +45,15 @@ public class MacLoginUrlAuthenticationEntryPoint implements AuthenticationEntryP
         Assert.notNull(portResolver, "portResolver must be specified");
     }
 
-
-    /**
-     * Performs the redirect (or forward) to the login form URL.
-     */
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
         // redirect to login page. Use https if forceHttps true
         response.setContentType("application/json;charset=utf-8");
         PrintWriter out = response.getWriter();
         StringBuffer sb = new StringBuffer();
-        String test = "12312";
-        sb.append("{\"code\":").append(test)
+        sb.append("{\"code\":").append(ResponseCodeEnum.TOKEN_TIME_OUT.getValue())
                 .append(",\"message\":\"");
-        sb.append("token无效");
+        sb.append(ResponseCodeEnum.TOKEN_TIME_OUT.getName());
         sb.append("\",\"time\":");
         sb.append(new Date().getTime());
         sb.append("}");

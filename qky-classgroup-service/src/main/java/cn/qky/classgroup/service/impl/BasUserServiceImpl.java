@@ -1,6 +1,7 @@
 package cn.qky.classgroup.service.impl;
 
 import cn.qky.classgroup.dao.BasUserDao;
+import cn.qky.classgroup.entity.BasUser;
 import cn.qky.classgroup.service.BasUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,18 @@ public class BasUserServiceImpl implements BasUserService {
     @Override
     public BasUserDao getRepository() {
         return basUserDao;
+    }
+
+    @Override
+    public BasUser synBasUser(String openid) {
+        BasUser basUserParam = new BasUser();
+        basUserParam.setOpenid(openid);
+        BasUser dbBasUser =findOne(basUserParam);
+        if(dbBasUser==null){
+            BasUser basUser = new BasUser();
+            basUser.setOpenid(openid);
+            dbBasUser = save(basUser);
+        }
+        return dbBasUser;
     }
 }

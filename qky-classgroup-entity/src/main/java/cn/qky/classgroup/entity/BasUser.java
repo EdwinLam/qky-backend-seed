@@ -67,4 +67,13 @@ public class BasUser extends BaseEntity {
     @TableField(exist=false)
     private String password;
 
+	@Transient
+	@ApiModelProperty(value = "分组数量")
+	@TableField(exist=false)
+	private Integer groupNum;
+
+	@Transient
+	@ApiModelProperty(value = "分组昵称")
+	@TableField(exist=false)
+	private String groupNickName;
 }

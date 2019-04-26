@@ -5,6 +5,10 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * @Author: Edwin
+ * @Description: 跨域配置相关
+ */
 @Configuration
 @MapperScan("cn.qky.classgroup.dao")
 public class MybatisPlusConfig {

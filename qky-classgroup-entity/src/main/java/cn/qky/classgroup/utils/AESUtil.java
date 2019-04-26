@@ -20,38 +20,6 @@ import java.security.SecureRandom;
  */
 public class AESUtil {
 
-    /**
-     * 编码工具类
-     * 1.将byte[]转为各种进制的字符串
-     * 2.base 64 encode
-     * 3.base 64 decode
-     * 4.获取byte[]的md5值
-     * 5.获取字符串md5值
-     * 6.结合base64实现md5加密
-     * 7.AES加密
-     * 8.AES加密为base 64 code
-     * 9.AES解密
-     * 10.将base 64 code AES解密
-     *
-     * @author uikoo9
-     * @version 0.0.7.20140601
-     */
-
-    public static void main(String[] args) throws Exception {
-
-
-        String content = "我爱你";
-        System.out.println("加密前：" + content);
-
-        String key = "123456";
-        System.out.println("加密密钥和解密密钥：" + key);
-
-        String encrypt = aesEncrypt(content, key);
-        System.out.println("加密后：" + encrypt);
-
-        String decrypt = aesDecrypt(encrypt, key);
-        System.out.println("解密后：" + decrypt);
-    }
 
     /**
      * 将byte[]转为各种进制的字符串

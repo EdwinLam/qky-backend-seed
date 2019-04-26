@@ -1,6 +1,0 @@
-archivesBaseName = 'qky-classgroup-util'
-
-
-dependencies {
-    compile('com.ibeetl:beetl:2.8.3')
-}
